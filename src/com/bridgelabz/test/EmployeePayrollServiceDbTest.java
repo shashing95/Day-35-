@@ -31,7 +31,7 @@ public class EmployeePayrollServiceDbTest {
 	public void givenDateRange_whenRetrived_shouldMatchEmployeeCount() {
 		EmployeePayrollService employeePayrollService=new EmployeePayrollService();
 		employeePayrollService.readEmployeePayrollData(IOService.DB_IO);
-		LocalDate startDate=LocalDate.of(2020,04,01);
+		LocalDate startDate=LocalDate.of(2022,01,10);
 		LocalDate endDate=LocalDate.now();
 		List<EmployeePayrollData> employeePayrollData=employeePayrollService.readEmployeePayrollForDateRange(IOService.DB_IO,startDate,endDate);
 		assertEquals(3,employeePayrollData.size());
@@ -49,6 +49,14 @@ public class EmployeePayrollServiceDbTest {
 		employeePayrollService.readEmployeePayrollData(IOService.DB_IO);
 		employeePayrollService.addEmployeeToPayroll("Abc",5000.0,LocalDate.now(),"F");
 		boolean result=employeePayrollService.checkEmployeePayrollSyncWithDb("Abc");
+		assertTrue(result);
+	}
+	@Test
+	public void givenNewEmployee_whenAdded_shouldAddedToTableAndSyncWithDb() {
+		EmployeePayrollService employeePayrollService=new EmployeePayrollService();
+		employeePayrollService.readEmployeePayrollData(IOService.DB_IO);
+		employeePayrollService.addEmployeeToPayrollMultipleTable("Cab",12000.0,LocalDate.now(),"M");
+		boolean result=employeePayrollService.checkEmployeePayrollSyncWithDb("Cab");
 		assertTrue(result);
 	}
 
